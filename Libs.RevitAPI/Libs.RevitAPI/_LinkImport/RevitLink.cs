@@ -11,8 +11,8 @@ namespace Libs.RevitAPI._LinkImport
     {
         public static List<RevitLinkInstance> GetRevitLinkInstances(Document doc)
         {
-            List<RevitLinkInstance> linkInstances = new();
-            FilteredElementCollector collector = new(doc);
+            List<RevitLinkInstance> linkInstances = new List<RevitLinkInstance>();
+            FilteredElementCollector collector = new FilteredElementCollector(doc);
             ICollection<Element> revitLinkInstances = collector.OfClass(typeof(RevitLinkInstance)).ToElements();
             foreach (Element element in revitLinkInstances)
             {

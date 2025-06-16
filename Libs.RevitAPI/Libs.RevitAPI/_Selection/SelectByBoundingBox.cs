@@ -21,16 +21,16 @@ namespace Libs.RevitAPI._Selection
 
         public static List<Element> GetElementsTouchBoundingBox(Document doc, Element el, double scaleBoudingBox = 1.05)
         {
-            FilteredElementCollector filteredElementCollector = new(doc);
+            FilteredElementCollector filteredElementCollector = new FilteredElementCollector(doc);
             BoundingBoxXYZ boundingBoxXYZ = el.get_BoundingBox(doc.ActiveView);
-            Outline outline = new(boundingBoxXYZ.Min, boundingBoxXYZ.Max);
+            Outline outline = new Outline(boundingBoxXYZ.Min, boundingBoxXYZ.Max);
             outline.Scale(scaleBoudingBox);
-            BoundingBoxIntersectsFilter boundingBoxIntersectsFilter = new(outline, false);
-            List<ElementFilter> listElementFilter = new() { boundingBoxIntersectsFilter };
-            LogicalAndFilter logicalAndFilter = new(listElementFilter);
+            BoundingBoxIntersectsFilter boundingBoxIntersectsFilter = new BoundingBoxIntersectsFilter(outline, false);
+            List<ElementFilter> listElementFilter = new List<ElementFilter>() { boundingBoxIntersectsFilter };
+            LogicalAndFilter logicalAndFilter = new LogicalAndFilter(listElementFilter);
             List<Element> temp = filteredElementCollector.WherePasses(logicalAndFilter).Excluding(new List<ElementId> { el.Id }).WhereElementIsNotElementType().ToList();
 
-            List<Element> result = new();
+            List<Element> result = new List<Element>();
             foreach (Element ele in temp) result.Add(ele);
             result.RemoveAll(x => x == null);
             return result;

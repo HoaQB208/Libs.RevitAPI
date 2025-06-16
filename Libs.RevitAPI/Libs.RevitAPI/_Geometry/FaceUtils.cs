@@ -167,7 +167,7 @@ namespace Libs.RevitAPI._Geometry
         public static Solid CreateSolidFromCurveLoop(CurveLoop curveLoop, double height, XYZ vector = null)
         {
             // Tạo danh sách chứa CurveLoop
-            List<CurveLoop> curveLoops = new() { curveLoop };
+            List<CurveLoop> curveLoops = new List<CurveLoop>() { curveLoop };
             // Tạo Solid bằng cách đùn CurveLoop theo hướng Z lên với chiều cao nhất định
             Solid solid = GeometryCreationUtilities.CreateExtrusionGeometry(curveLoops, vector, height);
             return solid;

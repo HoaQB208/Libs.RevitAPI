@@ -6,19 +6,21 @@ namespace Libs.RevitAPI._Create
     {
         public static void Create(Document doc, XYZ start, XYZ end)
         {
-            using Transaction tr = new (doc);
-            tr.Start("CreateGrids Line");
-            Line curve = Line.CreateBound(start, end);
-            doc.Create.NewDetailCurve(doc.ActiveView, curve);
-            tr.Commit();
+            using (Transaction tr = new Transaction(doc, "CreateGrids Line"))
+            {
+                tr.Start();
+                Line curve = Line.CreateBound(start, end);
+                doc.Create.NewDetailCurve(doc.ActiveView, curve);
+                tr.Commit();
+            }
         }
 
         public static void CreateModelLine(Document doc, XYZ point1, XYZ point2)
         {
             // Bắt đầu một transaction
-            using (Transaction trans = new Transaction(doc, "Create Model Line"))
+            using (Transaction tr = new Transaction(doc, "Create Model Line"))
             {
-                trans.Start();
+                tr.Start();
                 // Tạo vector pháp tuyến cho mặt phẳng chứa đoạn thẳng
                 XYZ lineDirection = (point2 - point1).Normalize();
                 XYZ upDirection = XYZ.BasisZ;
@@ -40,7 +42,7 @@ namespace Libs.RevitAPI._Create
                 // Tạo Model Line
                 doc.Create.NewModelCurve(geomLine, sketchPlane);
                 // Kết thúc transaction
-                trans.Commit();
+                tr.Commit();
             }
         }
 

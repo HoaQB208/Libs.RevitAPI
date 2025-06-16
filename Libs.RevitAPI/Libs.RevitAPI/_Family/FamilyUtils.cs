@@ -47,7 +47,7 @@ namespace Libs.RevitAPI._Family
 
         public static List<FamilySymbol> GetAllFamilySymbol(Family family)
         {
-            List<FamilySymbol> familySymbols = new();
+            List<FamilySymbol> familySymbols = new List<FamilySymbol>();
             foreach (ElementId familySymbolId in family.GetFamilySymbolIds())
             {
                 FamilySymbol familySymbol = family.Document.GetElement(familySymbolId) as FamilySymbol;
