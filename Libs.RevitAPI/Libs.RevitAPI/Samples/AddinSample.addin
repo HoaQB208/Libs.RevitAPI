@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+   <AddIn Type="Application">
+      <ClientId>393C3883-6E51-4199-9922-7D275BC95350</ClientId>
+      <Assembly>HoaPham\BIMOptimizer_Revit.dll</Assembly>
+      <FullClassName>AddMenuTab</FullClassName>
+      <Name>HoaPham</Name>
+      <VendorId>Hoa Pham</VendorId>
+      <VendorDescription>Hoa Pham</VendorDescription>	  
+   </AddIn>
+</RevitAddIns>
