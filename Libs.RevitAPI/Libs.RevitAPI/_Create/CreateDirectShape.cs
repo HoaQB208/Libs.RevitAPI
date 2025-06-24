@@ -9,7 +9,7 @@ namespace Libs.RevitAPI._Create
 {
     public class CreateDirectShape
     {
-        public static void Create(Document doc, List<Solid> solids, Color color = null, BuiltInCategory builtInCategory = BuiltInCategory.OST_GenericModel)
+        public static void Create(Document doc, List<Solid> solids, Autodesk.Revit.DB.Color color = null, BuiltInCategory builtInCategory = BuiltInCategory.OST_GenericModel)
         {
             using (Transaction transaction = new Transaction(doc, "CreateGrids DirectShape"))
             {
@@ -33,7 +33,7 @@ namespace Libs.RevitAPI._Create
                     List<CurveLoop> validCurveLoops = new List<CurveLoop>();
                     foreach (CurveLoop curveLoop in curveLoops)
                         if (!curveLoop.IsOpen()) validCurveLoops.Add(curveLoop);
-                    Material material = GetOrCreateMaterial(doc, "CustomMaterial", new Color(255, 0, 0)); // Đỏ
+                    Material material = GetOrCreateMaterial(doc, "CustomMaterial", new Autodesk.Revit.DB.Color(255, 0, 0)); // Đỏ
                     // Tạo một Solid từ các CurveLoop hợp lệ (tạo một khối rắn từ bề mặt)
                     SolidOptions solidOptions = new SolidOptions(material.Id, ElementId.InvalidElementId);
                     Solid planarFaceSolid = GeometryCreationUtilities.CreateExtrusionGeometry(validCurveLoops, planarFace.FaceNormal, 1, solidOptions); // Chiều cao đùn ra
@@ -71,7 +71,7 @@ namespace Libs.RevitAPI._Create
                     foreach (CurveLoop curveLoop in curveLoops)
                         if (!curveLoop.IsOpen()) validCurveLoops.Add(curveLoop);
                     // Tạo hoặc lấy Material
-                    Material material = GetOrCreateMaterial(doc, "CustomMaterial", new Color(255, 0, 0)); // Đỏ
+                    Material material = GetOrCreateMaterial(doc, "CustomMaterial", new Autodesk.Revit.DB.Color(255, 0, 0)); // Đỏ
                     // Tạo một Solid từ các CurveLoop hợp lệ
                     SolidOptions solidOptions = new SolidOptions(material.Id, ElementId.InvalidElementId);
                     Solid planarFaceSolid = GeometryCreationUtilities.CreateExtrusionGeometry(validCurveLoops, planarFace.FaceNormal, 1, solidOptions); // Chiều cao đùn ra
@@ -123,7 +123,7 @@ namespace Libs.RevitAPI._Create
                         if (!curveLoop.IsOpen()) validCurveLoops.Add(curveLoop);
 
                     // Tạo hoặc lấy Material
-                    Material material = GetOrCreateMaterial(doc, "CustomMaterial", new Color(255, 0, 0)); // Đỏ
+                    Material material = GetOrCreateMaterial(doc, "CustomMaterial", new Autodesk.Revit.DB.Color(255, 0, 0)); // Đỏ
 
                     // Tạo một Solid từ các CurveLoop hợp lệ
                     SolidOptions solidOptions = new SolidOptions(material.Id, ElementId.InvalidElementId);
@@ -150,7 +150,7 @@ namespace Libs.RevitAPI._Create
                 {
                     // Hủy giao dịch nếu có lỗi
                     trans.RollBack();
-                    Msg.Show(ex.Message);
+                    //Msg.Show(ex.Message);
                     return null;
                 }
             }
@@ -180,7 +180,7 @@ namespace Libs.RevitAPI._Create
             }
             return null;
         }
-        private static Material GetOrCreateMaterial(Document doc, string materialName, Color color)
+        private static Material GetOrCreateMaterial(Document doc, string materialName, Autodesk.Revit.DB.Color color)
         {
             // Tìm material theo tên
             FilteredElementCollector collector = new FilteredElementCollector(doc);
@@ -261,7 +261,7 @@ namespace Libs.RevitAPI._Create
                         if (!curveLoop.IsOpen()) validCurveLoops.Add(curveLoop);
                     }
                     // Tạo hoặc lấy Material
-                    Material material = GetOrCreateMaterial(doc, "CustomMaterial", new Color(255, 0, 0));
+                    Material material = GetOrCreateMaterial(doc, "CustomMaterial", new Autodesk.Revit.DB.Color(255, 0, 0));
                     // Tạo một Solid từ các CurveLoop hợp lệ
                     SolidOptions solidOptions = new SolidOptions(material.Id, ElementId.InvalidElementId);
                     Solid faceSolid = GeometryCreationUtilities.CreateExtrusionGeometry(validCurveLoops, face.ComputeNormal(new UV(0, 0)), 1, solidOptions);
@@ -276,7 +276,7 @@ namespace Libs.RevitAPI._Create
                 catch (Exception ex)
                 {
                     trans.RollBack();
-                    Msg.Show(ex.Message);
+                    //Msg.Show(ex.Message);
                 }
             }
         }

@@ -1,7 +1,6 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Libs.RevitAPI._Common;
 
 namespace Libs.RevitAPI.Samples
 {
@@ -17,7 +16,6 @@ namespace Libs.RevitAPI.Samples
             //Document doc = uidoc.Document;
 
             // Do something here...
-            Msg.Show("Hello");
 
             return Result.Succeeded;
         }

@@ -8,7 +8,7 @@ namespace Libs.RevitAPI._Common
         public static double MMToInternal(double value)
         {
 
-#if R2023 || R2022 || R2024
+#if R2021 || R2022 || R2023 || R2024 || R2025
             return UnitUtils.ConvertToInternalUnits(value, UnitTypeId.Millimeters);
 #else
             return UnitUtils.ConvertToInternalUnits(value, DisplayUnitType.DUT_MILLIMETERS);
@@ -18,7 +18,7 @@ namespace Libs.RevitAPI._Common
         public static double Milimetter2Feet(double a)
         {
 
-#if R21 || R2022 || R2023 || R2024
+#if R2021 || R2022 || R2023 || R2024 || R2025
 
             return UnitUtils.Convert(a, UnitTypeId.Millimeters, UnitTypeId.FeetFractionalInches);
 #else
@@ -28,7 +28,7 @@ namespace Libs.RevitAPI._Common
         public static double Feet2Milimetter(double a)
         {
 
-#if R21 || R2022 || R2023 || R2024
+#if R2021 || R2022 || R2023 || R2024 || R2025
             return UnitUtils.Convert(a, UnitTypeId.FeetFractionalInches, UnitTypeId.Millimeters);
 #else
             return UnitUtils.Convert(a, DisplayUnitType.DUT_DECIMAL_FEET, DisplayUnitType.DUT_MILLIMETERS);
@@ -38,7 +38,7 @@ namespace Libs.RevitAPI._Common
         public static double Inch2Milimetter(double a)
         {
 
-#if R21 || R2022 || R2023 || R2024
+#if R2021 || R2022 || R2023 || R2024 || R2025
             return UnitUtils.Convert(a, UnitTypeId.Inches, UnitTypeId.Millimeters);
 #else
             return UnitUtils.Convert(a, DisplayUnitType.DUT_DECIMAL_INCHES, DisplayUnitType.DUT_MILLIMETERS);
@@ -48,7 +48,7 @@ namespace Libs.RevitAPI._Common
         public static double Milimetter2Inch(double a)
         {
 
-#if R21 || R2022 || R2023 || R2024
+#if R2021 || R2022 || R2023 || R2024 || R2025
             return UnitUtils.Convert(a, UnitTypeId.Millimeters, UnitTypeId.Inches);
 #else
             return UnitUtils.Convert(a, DisplayUnitType.DUT_MILLIMETERS, DisplayUnitType.DUT_DECIMAL_INCHES);
@@ -58,7 +58,7 @@ namespace Libs.RevitAPI._Common
         public static double Degree2Radian(double a)
         {
 
-#if R21 || R2022 || R2023 || R2024
+#if R2021 || R2022 || R2023 || R2024 || R2025
             return UnitUtils.Convert(a, UnitTypeId.Degrees, UnitTypeId.Radians);
 #else
             return UnitUtils.Convert(a, DisplayUnitType.DUT_DECIMAL_DEGREES, DisplayUnitType.DUT_RADIANS);
@@ -68,7 +68,7 @@ namespace Libs.RevitAPI._Common
         public static double Radian2Degree(double a)
         {
 
-#if R21 || R2022 || R2023 || R2024
+#if R2021 || R2022 || R2023 || R2024 || R2025
             return UnitUtils.Convert(a, UnitTypeId.Radians, UnitTypeId.Degrees);
 #else
             return UnitUtils.Convert(a, DisplayUnitType.DUT_RADIANS, DisplayUnitType.DUT_DECIMAL_DEGREES);

@@ -18,7 +18,7 @@ namespace Libs.RevitAPI._LinkImport
                         {
                             if (blockIns != null)
                             {
-#if R24
+#if R2024 || R2025
                                 //need to fix for Revit 24
 #else
                                 if (blockIns.Symbol != null)
@@ -49,7 +49,7 @@ namespace Libs.RevitAPI._LinkImport
                         {
                             if (blockIns != null)
                             {
-#if R24
+#if R2024 || R2025
                                 //need to fix for Revit 24
 #else
                                 if (blockIns.Symbol != null)
@@ -79,8 +79,8 @@ namespace Libs.RevitAPI._LinkImport
                     {
                         if (blockObject is GeometryInstance) // This could be a block
                         {
-#if R24
-                        // need to fix in revit 2024
+#if R2024 || R2025
+                            // need to fix in revit 2024
 #else
                             GeometryInstance blockInstance = blockObject as GeometryInstance;
                             string nameBlock = blockInstance.Symbol.Name.Replace(TrimName, "");

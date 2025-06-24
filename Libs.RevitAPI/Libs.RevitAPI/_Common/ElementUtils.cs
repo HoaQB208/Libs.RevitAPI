@@ -1,10 +1,4 @@
 ﻿using Autodesk.Revit.DB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using Libs.RevitAPI._Document;
 
 namespace Libs.RevitAPI._Common
@@ -17,7 +11,7 @@ namespace Libs.RevitAPI._Common
         /// <param name="document"></param>
         /// <param name="elementId"></param>
         /// <param name="color"></param>
-        public static void SetOverrideGraphicSettings(Document document, ElementId elementId, Color color = null)
+        public static void SetOverrideGraphicSettings(Document document, ElementId elementId, Autodesk.Revit.DB.Color color = null)
         {
             if (color != null)
             {
@@ -34,7 +28,7 @@ namespace Libs.RevitAPI._Common
                 ogs.SetCutForegroundPatternId(solidFillPatternId);
                 ogs.SetCutForegroundPatternColor(color);
                 ogs.SetSurfaceForegroundPatternColor(color);
-         document.ActiveView.SetElementOverrides(elementId, ogs);
+                document.ActiveView.SetElementOverrides(elementId, ogs);
             }
         }
 
@@ -44,7 +38,7 @@ namespace Libs.RevitAPI._Common
         /// <param name="document"></param>
         /// <param name="elementId"></param>
         /// <param name="color"></param>
-        public static void SetOverrideGraphicSettingsWithTransaction(Document document, ElementId elementId, Color color = null)
+        public static void SetOverrideGraphicSettingsWithTransaction(Document document, ElementId elementId, Autodesk.Revit.DB.Color color = null)
         {
             if (color != null)
             {

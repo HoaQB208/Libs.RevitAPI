@@ -1,13 +1,9 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
-using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Libs.RevitAPI._Common;
-using Libs.RevitAPI._Create;
-using Libs.RevitAPI._Geometry;
 
 namespace Libs.RevitAPI._Family
 {
@@ -60,7 +56,7 @@ namespace Libs.RevitAPI._Family
             string[] familyFiles = Directory.GetFiles(pathFolder, "*.rfa");
             if (familyFiles.Length == 0)
             {
-                Msg.Show($"No family files found in the {pathFolder} ");
+                //Msg.Show($"No family files found in the {pathFolder} ");
                 return;
             };
             foreach (string familyFile in familyFiles)
@@ -111,10 +107,10 @@ namespace Libs.RevitAPI._Family
                     familyInstance = doc.Create.NewFamilyInstance(pf, location, refDir, familySymbol);
                     trans.Commit();
                 }
-                catch (Exception ex)
+                catch
                 {
                     trans.RollBack();
-                    Msg.Show(ex.Message);
+                    //Msg.Show(ex.Message);
                 }
             }
             return familyInstance;
@@ -132,7 +128,7 @@ namespace Libs.RevitAPI._Family
                     return symbol;
                 }
             }
-            Msg.Show("FamilySymbol not found: " + familySymbolName);
+            //Msg.Show("FamilySymbol not found: " + familySymbolName);
             return null;
         }
 

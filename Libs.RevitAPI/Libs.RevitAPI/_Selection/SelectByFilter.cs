@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
+using View = Autodesk.Revit.DB.View;
 
 namespace Libs.RevitAPI._Selection
 {

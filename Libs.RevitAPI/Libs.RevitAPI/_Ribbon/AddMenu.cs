@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.UI;
+using Libs.RevitAPI._Common;
 using System;
 using System.Windows.Media.Imaging;
 
@@ -16,8 +17,9 @@ namespace Libs.RevitAPI._Ribbon
             return app.CreateRibbonPanel(toolName, panelName);
         }
 
-        public static void AddBigButton(RibbonPanel panel, string assemblyPath, string cmdClassName, string text, BitmapImage icon, string toolTip = "", string longDescription = "")
+        public static void AddBigButton(RibbonPanel panel, string assemblyPath, string cmdClassName, string text, byte[] imgBytes, string toolTip = "", string longDescription = "")
         {
+            BitmapImage icon = ImageUtils.ByteArrayToBitmapImage(imgBytes, 32, 32);
             PushButtonData data = new PushButtonData(Guid.NewGuid().ToString(), text, assemblyPath, cmdClassName)
             {
                 ToolTip = toolTip,
