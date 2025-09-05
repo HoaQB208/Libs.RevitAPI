@@ -1,10 +1,8 @@
 ﻿using Autodesk.Revit.DB;
-using System;
+using Autodesk.Revit.UI.Selection;
+using Autodesk.Revit.UI;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using ViewRevit = Autodesk.Revit.DB.View;
 
 namespace Libs.RevitAPI._View
@@ -33,15 +31,90 @@ namespace Libs.RevitAPI._View
             }
             return null;
         }
+
         public static ViewRevit Find2DView(Document familyDoc, string nameView)
         {
             //Get Default Sheet
             Element view2D = new FilteredElementCollector(familyDoc).OfClass(typeof(ViewSheet)).FirstOrDefault();
             if (view2D != null) return view2D as ViewRevit;
-            ViewRevit view= view2D as ViewRevit;
+            ViewRevit view = view2D as ViewRevit;
             view.Name = nameView;
             return view;
         }
 
+        public static List<Curve> GetSelectionBox(UIDocument uidoc)
+        {
+            PickedBox pickedBox;
+            try { pickedBox = uidoc.Selection.PickBox(PickBoxStyle.Crossing, "Crop View..."); } catch { return null; }
+
+            Transform viewTransform = uidoc.ActiveView.CropBox.Transform;
+            XYZ min = viewTransform.Inverse.OfPoint(pickedBox.Min);
+            XYZ max = viewTransform.Inverse.OfPoint(pickedBox.Max);
+
+            // Tạo CurveLoop (chu vi vùng crop)
+            XYZ pt1 = new XYZ(min.X, min.Y, 0);
+            XYZ pt2 = new XYZ(max.X, min.Y, 0);
+            XYZ pt3 = new XYZ(max.X, max.Y, 0);
+            XYZ pt4 = new XYZ(min.X, max.Y, 0);
+            List<Curve> profile = new List<Curve>
+                        {
+                            Line.CreateBound(pt1, pt2),
+                            Line.CreateBound(pt2, pt3),
+                            Line.CreateBound(pt3, pt4),
+                            Line.CreateBound(pt4, pt1)
+                        };
+            return profile.Select(c => c.CreateTransformed(viewTransform)).ToList();
+        }
+
+        public static void Cropping_View2D(Document doc, List<Curve> lsCurve)
+        {
+            CurveLoop curveLoop = CurveLoop.Create(lsCurve);
+            using (Transaction tr = new Transaction(doc, "CropView"))
+            {
+                tr.Start();
+                doc.ActiveView.CropBoxActive = true;
+                doc.ActiveView.CropBoxVisible = true;
+                ViewCropRegionShapeManager cropRegionShapeManager = doc.ActiveView.GetCropRegionShapeManager();
+                cropRegionShapeManager.SetCropShape(curveLoop);
+                tr.Commit();
+            }
+        }
+
+        public static HashSet<string> GetViewSheetNames(Document doc)
+        {
+            return new FilteredElementCollector(doc).OfClass(typeof(ViewSheet)).WhereElementIsNotElementType().Cast<ViewSheet>().Where(x => x != null).Select(x => x.SheetNumber).ToHashSet();
+        }
+
+        public static List<ViewRevit> GetAllViews(Document doc)
+        {
+            var excludedTypes = new HashSet<ViewType>
+            {
+                ViewType.DrawingSheet,
+                ViewType.ProjectBrowser,
+                ViewType.Undefined,
+                ViewType.Report,
+                ViewType.SystemBrowser
+            };
+            return new FilteredElementCollector(doc)
+                .OfCategory(BuiltInCategory.OST_Views)
+                .WhereElementIsNotElementType()
+                .Cast<View>()
+                .Where(view => !view.IsTemplate && !excludedTypes.Contains(view.ViewType))
+                .OrderBy(view => view.Name)
+                .ToList();
+        }
+
+        public static List<Viewport> GetAllViewport(ViewSheet viewSheet)
+        {
+            ICollection<ElementId> allViewports = viewSheet.GetAllViewports();
+            var doc = viewSheet.Document;
+            List<Viewport> viewports = new List<Viewport>();
+            foreach (var elementId in allViewports)
+            {
+                var el = doc.GetElement(elementId);
+                if(el is Viewport vp) viewports.Add(vp);  
+            }    
+            return viewports;
+        }
     }
 }

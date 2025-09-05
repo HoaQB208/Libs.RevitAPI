@@ -1,15 +1,23 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace Libs.RevitAPI._Selection
 {
     public class SelectPoint
     {
-        public static XYZ Click(UIDocument uidoc, string msg = "")
+        public static XYZ Click(UIDocument uidoc, out string error, string msg = "")
         {
-            XYZ result = null;
-            try { result = uidoc.Selection.PickPoint(msg); } catch { }
-            return result;
+            error = "";
+            try
+            {
+                return uidoc.Selection.PickPoint(msg);
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+            }
+            return null;
         }
     }
 }

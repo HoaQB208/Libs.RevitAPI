@@ -3,11 +3,11 @@ using Autodesk.Revit.UI.Selection;
 
 namespace Libs.RevitAPI._SelectionFilters
 {
-    public class GridLevelFilter : ISelectionFilter
+    public class LevelFilter : ISelectionFilter
     {
         public bool AllowElement(Element elem)
         {
-            return elem.Category.Name == "Levels" || elem.Category.Name == "Grids";
+            return elem.Category.Name == "Levels";
         }
 
         public bool AllowReference(Reference reference, XYZ position)

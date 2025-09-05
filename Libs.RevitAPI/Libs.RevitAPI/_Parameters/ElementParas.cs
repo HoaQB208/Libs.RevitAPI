@@ -1,14 +1,35 @@
 ﻿using Autodesk.Revit.DB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Libs.RevitAPI._Parameters
 {
     public class ElementParas
     {
+        public static string GetParameterValue(Parameter parameter)
+        {
+            switch (parameter.StorageType)
+            {
+                case StorageType.Integer:
+                    return parameter.AsInteger().ToString();
+                case StorageType.Double:
+                    return parameter.AsDouble().ToString();
+                case StorageType.String:
+                    return parameter.AsString();
+                case StorageType.ElementId:
+                    return parameter.AsElementId().ToString();
+                default:
+                    return "Unknown";
+            }
+        }
+
+        public static Parameter GetParameterByName(Element element, string parameterName)
+        {
+            if (element == null || string.IsNullOrEmpty(parameterName)) return null;
+            foreach (Parameter para in element.Parameters)
+            {
+                if (para?.Definition?.Name == parameterName) return para;
+            }
+            return null;
+        }
 
         public static string GetStructuralMaterialOfElement(Document doc, Element element)
         {

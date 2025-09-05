@@ -6,10 +6,8 @@ using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
-using System.Windows.Controls;
 using View = Autodesk.Revit.DB.View;
 
 namespace Libs.RevitAPI._Selection
@@ -25,6 +23,7 @@ namespace Libs.RevitAPI._Selection
         {
             return new FilteredElementCollector(document, document.ActiveView.Id).WhereElementIsNotElementType().ToElements().Where(x => x != null).ToList();
         }
+
         public static List<ElementId> GetActiveViewElementIs(Document document)
         {
             return new FilteredElementCollector(document, document.ActiveView.Id).WhereElementIsNotElementType().ToElementIds().Where(x => x != null).ToList();
@@ -71,6 +70,7 @@ namespace Libs.RevitAPI._Selection
             }
             return categories;
         }
+
         public static Level GetLevelFromHostElement(Element hostElement, Document doc)
         {
             if (hostElement is Autodesk.Revit.DB.Floor floor)
@@ -94,6 +94,7 @@ namespace Libs.RevitAPI._Selection
         {
             return new FilteredElementCollector(document).OfClass(typeof(DetailLine)).WhereElementIsNotElementType().Cast<DetailLine>().ToList();
         }
+
         /// <summary>
         /// Get All Line Patterns in project.
         /// </summary>
@@ -156,7 +157,6 @@ namespace Libs.RevitAPI._Selection
             }
             return elementSolids;
         }
-
 
         public static List<Curve> GetCurvesOfFace(Face face)
         {
@@ -244,12 +244,11 @@ namespace Libs.RevitAPI._Selection
             return lsParaAvailable;
         }
 
-
-
         public static IEnumerable<Family> GetAllFamilies(Document document)
         {
             return new FilteredElementCollector(document).WhereElementIsNotElementType().OfClass(typeof(Family)).Cast<Family>();
         }
+
         public static IEnumerable<Family> GetAllInPlaceFamilies(Document document)
         {
             return new FilteredElementCollector(document).WhereElementIsNotElementType().OfClass(typeof(Family)).OfType<Family>().Where(x => x.IsInPlace);
@@ -316,7 +315,6 @@ namespace Libs.RevitAPI._Selection
             return allFamiliesTypes;
         }
 
-
         public static IEnumerable<Material> GetAllMaterials(Document document)
         {
             return new FilteredElementCollector(document).WhereElementIsNotElementType().OfClass(typeof(Material)).Cast<Material>();
@@ -352,7 +350,6 @@ namespace Libs.RevitAPI._Selection
             return new FilteredElementCollector(document).OfClass(typeof(CADLinkType)).OfType<CADLinkType>().Where(x => !x.IsExternalFileReference());
         }
 
-
         public static IEnumerable<ImportInstance> GetImportInstance(Document document)
         {
             return new FilteredElementCollector(document).OfClass(typeof(ImportInstance)).OfType<ImportInstance>().Where(x => !x.IsExternalFileReference());
@@ -377,7 +374,6 @@ namespace Libs.RevitAPI._Selection
             return unusedMaterialsList;
         }
 
-
         public static IEnumerable<View> GetAllLegends(Document document)
         {
             return new FilteredElementCollector(document).OfClass(typeof(View)).Cast<View>().Where(x => x != null && x.ViewType == ViewType.Legend);
@@ -398,6 +394,22 @@ namespace Libs.RevitAPI._Selection
             return new FilteredElementCollector(document).OfClass(typeof(ParameterFilterElement)).Cast<ParameterFilterElement>().Where(x => x != null);
         }
 
+        public static IEnumerable<View> GetAllViews(Document document)
+        {
+            return new FilteredElementCollector(document).WhereElementIsNotElementType().OfClass(typeof(View)).Cast<View>()
+                .Where(x => x.ViewType == ViewType.FloorPlan ||
+                x.ViewType == ViewType.CeilingPlan ||
+                x.ViewType == ViewType.Elevation ||
+                x.ViewType == ViewType.ThreeD ||
+                x.ViewType == ViewType.DraftingView ||
+                x.ViewType == ViewType.EngineeringPlan ||
+                x.ViewType == ViewType.AreaPlan ||
+                x.ViewType == ViewType.Section ||
+                x.ViewType == ViewType.Detail ||
+                x.ViewType == ViewType.Walkthrough ||
+                x.ViewType == ViewType.Rendering ||
+                x.ViewType == ViewType.Legend).Where(y => y.IsTemplate == false);
+        }
 
 
         /// <summary>
@@ -427,8 +439,6 @@ namespace Libs.RevitAPI._Selection
            .Where(x => x.Symbol.FamilyName.Equals(familyName)).ToList<Element>();
         }
 
-
-
         public static List<Level> Levels(Document document)
         {
             return new FilteredElementCollector(document).OfClass(typeof(Level)).Cast<Level>().ToList();
@@ -448,14 +458,17 @@ namespace Libs.RevitAPI._Selection
         {
             return new FilteredElementCollector(document).OfClass(typeof(TextNoteType)).Cast<TextNoteType>().ToList();
         }
+
         public static List<TextElement> TextElements(Document document)
         {
             return new FilteredElementCollector(document).WhereElementIsNotElementType().OfClass(typeof(TextElement)).Cast<TextElement>().ToList();
         }
+
         public static List<Dimension> Dimensions(Document document)
         {
             return new FilteredElementCollector(document).WhereElementIsNotElementType().OfClass(typeof(Dimension)).Cast<Dimension>().ToList();
         }
+
         public static List<SharedParameterElement> SharedParameterElements(Document document)
         {
             return new FilteredElementCollector(document).WhereElementIsNotElementType().OfClass(typeof(SharedParameterElement)).Cast<SharedParameterElement>().ToList();
