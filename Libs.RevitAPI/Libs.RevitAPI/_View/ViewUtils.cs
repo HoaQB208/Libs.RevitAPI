@@ -98,7 +98,7 @@ namespace Libs.RevitAPI._View
             return new FilteredElementCollector(doc)
                 .OfCategory(BuiltInCategory.OST_Views)
                 .WhereElementIsNotElementType()
-                .Cast<View>()
+                .Cast<ViewRevit>()
                 .Where(view => !view.IsTemplate && !excludedTypes.Contains(view.ViewType))
                 .OrderBy(view => view.Name)
                 .ToList();
