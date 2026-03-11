@@ -18,7 +18,7 @@ namespace Libs.RevitAPI._LinkImport
                         {
                             if (blockIns != null)
                             {
-#if R2024 || R2025
+#if R2024 || R2025 || R2026
                                 //need to fix for Revit 24
 #else
                                 if (blockIns.Symbol != null)
@@ -49,7 +49,7 @@ namespace Libs.RevitAPI._LinkImport
                         {
                             if (blockIns != null)
                             {
-#if R2024 || R2025
+#if R2024 || R2025 || R2026
                                 //need to fix for Revit 24
 #else
                                 if (blockIns.Symbol != null)
@@ -79,7 +79,7 @@ namespace Libs.RevitAPI._LinkImport
                     {
                         if (blockObject is GeometryInstance) // This could be a block
                         {
-#if R2024 || R2025
+#if R2024 || R2025 || R2026
                             // need to fix in revit 2024
 #else
                             GeometryInstance blockInstance = blockObject as GeometryInstance;

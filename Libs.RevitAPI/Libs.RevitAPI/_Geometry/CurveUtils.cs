@@ -92,14 +92,14 @@ namespace Libs.RevitAPI._Geometry
             }
             return false;
         }
-        public static bool IsInsideEntire( Curve curveCheck, Curve curveTarget)
+        public static bool IsInsideEntire(Curve curveCheck, Curve curveTarget)
         {
             bool result;
             try
             {
                 XYZ endPoint = curveCheck.GetEndPoint(0);
                 XYZ endPoint2 = curveCheck.GetEndPoint(1);
-                result = (IsContains(curveTarget,endPoint, 0.0001) && IsContains(curveTarget, endPoint2, 0.0001));
+                result = (IsContains(curveTarget, endPoint, 0.0001) && IsContains(curveTarget, endPoint2, 0.0001));
             }
             catch
             {
@@ -107,7 +107,7 @@ namespace Libs.RevitAPI._Geometry
             }
             return result;
         }
-        public static bool IsContains( Curve c, XYZ p, double tolerance = 0.0001)
+        public static bool IsContains(Curve c, XYZ p, double tolerance = 0.0001)
         {
             if (c.IsBound)
             {
